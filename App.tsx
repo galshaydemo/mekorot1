@@ -32,7 +32,7 @@ const Scanner = () => {
 
   const [barcode, setBarcode] = React.useState('');
   const [hasPermission, setHasPermission] = React.useState(false);
-  const [isScanned, setIsScanned] = React.useState(false);
+  const [isScanned, setIsScanned] = React.useState(true);
 
   React.useEffect(() => {
     checkCameraPermission();
@@ -77,7 +77,12 @@ const Scanner = () => {
     );
   if (isScanned) {
     return (
-      <View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+        }}>
         <TouchableHighlight
           style={styles.button}
           onPress={() => {
@@ -85,6 +90,8 @@ const Scanner = () => {
           }}>
           <Text style={styles.text}>Scan</Text>
         </TouchableHighlight>
+        <Text style={styles.label}>Last barcode Scan</Text>
+        <Text style={styles.barcode}>{barcode}</Text>
       </View>
     );
   }
@@ -111,6 +118,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
+  },
+  barcode: {
+    fontSize: 20,
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 20,
   },
   text: {
     color: 'white',
