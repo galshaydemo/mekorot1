@@ -71,8 +71,8 @@ const Scanner = () => {
     );
   if (!hasPermission)
     return (
-      <View>
-        <Text>No Permision Found</Text>
+      <View style={styles.noPermisionView}>
+        <Text style={styles.noPermision}>No Permision Found</Text>
       </View>
     );
   if (isScanned) {
@@ -113,10 +113,10 @@ export default Scanner;
 const styles = StyleSheet.create({
   button: {
     backgroundColor: 'green',
-    width: 100,
-    height: 100,
     alignItems: 'center',
     justifyContent: 'center',
+    width: 100,
+    height: 100,
     borderRadius: 50,
   },
   barcode: {
@@ -130,5 +130,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  noPermisionView: {
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noPermision: {
+    color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
