@@ -20,6 +20,7 @@ import {
   StatusBar,
   StyleSheet,
   TouchableHighlight,
+  PermissionsAndroid,
 } from 'react-native';
 
 const Scanner = () => {
@@ -33,13 +34,42 @@ const Scanner = () => {
   const [barcode, setBarcode] = React.useState('');
   const [hasPermission, setHasPermission] = React.useState(false);
   const [isScanned, setIsScanned] = React.useState(true);
-
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'Cool Photo App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the camera');
+        setHasPermission(true);
+      } else {
+        console.log('Camera permission denied');
+        setHasPermission(false);
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   React.useEffect(() => {
+    console.log('use effect');
     checkCameraPermission();
   }, []);
 
   const checkCameraPermission = async () => {
     const status = await Camera.getCameraPermissionStatus();
+    console.log('status=', status);
+    if (status !== 'authorized') {
+      requestCameraPermission();
+    }
     setHasPermission(status === 'authorized');
   };
 
